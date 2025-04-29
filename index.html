@@ -7,7 +7,9 @@
   <script type="importmap">
     {
       "imports": {
-        "wish": "https://esm.sh/@zuru-visuals/wish@1.0.0"
+        "wish": "https://esm.sh/@zuru-visuals/wish@1.0.0",
+        "preact": "https://esm.sh/preact@10.26.5",
+        "htm": "https://esm.sh/htm@3.1.1"
       }
     }
   </script>
@@ -30,14 +32,11 @@
 <body>
   <canvas id="canvas"></canvas>
   <script type="module">
-    import { make } from "wish";
-    const canvas = document.getElementById("canvas");
-    const render = await make({
-      canvas, fragmentShader: `vec3 render(vec2 uv, vec3 last) {
-             vec3 allRed = rgb2hsl(vec3(1.0, 0.0, 0.0));
-             return allRed;
-          }`});
-    render()
+    import { render } from "preact"
+    import html from "./html.mjs"
+    import Zuru from "./Zuru.mjs"
+
+    render(html`<${Zuru} />`, document.body)
   </script>
 </body>
 
