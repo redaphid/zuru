@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="importmap">
+    {
+      "imports": {
+        "wish": "https://esm.sh/@zuru-visuals/wish@1.0.0"
+      }
+    }
+  </script>
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    canvas {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <script type="module">
+    import { make } from "wish";
+    const canvas = document.getElementById("canvas");
+    const render = await make({
+      canvas, fragmentShader: `vec3 render(vec2 uv, vec3 last) {
+             vec3 allRed = rgb2hsl(vec3(1.0, 0.0, 0.0));
+             return allRed;
+          }`});
+    render()
+  </script>
+</body>
+
+</html>
