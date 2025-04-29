@@ -5,7 +5,7 @@ import { make } from "wish"
 export const Zuru = ({ shader, features }) => {
   const [render, setRender] = useState(null)
   const canvas = useRef(null)
-  const frameId = useRef(null)
+  const [frameId, setFrameId] = useState(0)
 
   // Effect for creating renderer and cleanup on unmount
   useEffect(async () => {
@@ -21,23 +21,17 @@ export const Zuru = ({ shader, features }) => {
     // Cleanup function runs on unmount
     return () => {
       r?.cleanup()
-      cancelAnimationFrame(frameId.current)
+      cancelAnimationFrame(frameId)
     }
   }, [shader, canvas]) // Depend on shader and canvas
 
   // Effect for animation
   useEffect(() => {
     if (!render) return
-
-    const animate = () => {
-      render(features)
-      frameId.current = requestAnimationFrame(animate)
-    }
-
-    frameId.current = requestAnimationFrame(animate)
+    setFrameId(requestAnimationFrame(() => render(features)))
 
     // No need for cleanup here, handled by the first effect's unmount
-  }, [render]) // Only depends on render instance
+  }, [render, frameId, features]) // Only depends on render instance
 
   return html` <canvas key=${shader} class="Zuru" ref=${canvas}></canvas> `
 }
