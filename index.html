@@ -23,25 +23,31 @@
       overflow: hidden;
     }
 
-    canvas {
+    #App {
       width: 100vw;
       height: 100vh;
+      display: flex;
+    }
+
+    #App>* {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .Zuru {
+      background-color: blue;
     }
   </style>
 </head>
 
 <body>
-  <canvas id="canvas"></canvas>
   <script type="module">
     import { render } from "preact"
     import html from "./html.mjs"
-    import Zuru from "./Zuru.mjs"
-    const shader = `vec3 render(vec2 uv, vec3 last) {
-             vec3 allRed = rgb2hsl(vec3(1.0, 0.0, 0.0));
-             return allRed;
-          }`
+    import App from "./App.mjs"
 
-    render(html`<${Zuru} shader=${shader} />`, document.body)
+    render(html`<${App} />`, document.body)
   </script>
 </body>
 
