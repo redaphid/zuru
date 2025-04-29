@@ -9,6 +9,7 @@
       "imports": {
         "wish": "https://esm.sh/@zuru-visuals/wish@1.0.0",
         "preact": "https://esm.sh/preact@10.26.5",
+        "preact/hooks": "https://esm.sh/preact@10.26.5/hooks",
         "htm": "https://esm.sh/htm@3.1.1"
       }
     }
@@ -35,8 +36,12 @@
     import { render } from "preact"
     import html from "./html.mjs"
     import Zuru from "./Zuru.mjs"
+    const shader = `vec3 render(vec2 uv, vec3 last) {
+             vec3 allRed = rgb2hsl(vec3(1.0, 0.0, 0.0));
+             return allRed;
+          }`
 
-    render(html`<${Zuru} />`, document.body)
+    render(html`<${Zuru} shader=${shader} />`, document.body)
   </script>
 </body>
 
