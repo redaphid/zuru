@@ -1,24 +1,36 @@
 import Zuru from "./Zuru.mjs"
 import { html } from "./html.mjs"
-import { useState, useEffect } from "preact/hooks"
+import { useState } from "preact/hooks"
+import { FeatureProvider, useFeatures } from "./FeatureProvider.mjs"
+import { useMidiHandler } from "./MidiHandler.mjs"
+
 const defaultShader = `vec3 render(vec2 uv, vec3 last) {
   return rgb2hsl(vec3(.0, 0., blue));
 }`
-const App = () => {
+
+const ZuruApp = () => {
   const [shader, setShader] = useState(defaultShader)
-  const [features, setFeatures] = useState({ blue: 0.035 })
+  const { features } = useFeatures()
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFeatures(prev => ({
-        blue: (prev.blue + 0.01) % 1
-      }))
-    }, 10)
+  // Initialize MIDI handler
+  useMidiHandler()
 
-    return () => clearInterval(interval)
-  }, [])
+  return html`
+    <div id="App">
+      <${Zuru} shader=${shader} features=${features} />
+      <div class="controls">
+        <textarea value=${shader} onInput=${(e) => setShader(e.target.value)} />
+      </div>
+    </div>
+  `
+}
 
-  return html`<div id="App"><${Zuru} shader=${shader} features=${features} /><textarea value=${shader} onInput=${(e) => setShader(e.target.value)} /></div>`
+const App = () => {
+  return html`
+    <${FeatureProvider}>
+      <${ZuruApp} />
+    <//>
+  `
 }
 
 export default App

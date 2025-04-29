@@ -16,6 +16,12 @@
   </script>
   <title>Document</title>
   <style>
+    * {
+      width: 100%;
+      height: 100%;
+      flex: 1;
+    }
+
     html,
     body {
       margin: 0;
@@ -30,9 +36,13 @@
     }
 
     #App>* {
-      flex: 1;
       width: 100%;
       height: 100%;
+    }
+
+    #App>.controls {
+      display: flex;
+      flex-direction: column;
     }
 
     .Zuru {
@@ -46,7 +56,17 @@
     import { render } from "preact"
     import html from "./html.mjs"
     import App from "./App.mjs"
-
+    let blue = 0
+    setInterval(() => {
+      blue = (blue + 0.01) % 1
+      console.log(blue)
+      window.postMessage({
+        type: "features",
+        features: {
+          blue: blue
+        }
+      }, "*")
+    }, 10)
     render(html`<${App} />`, document.body)
   </script>
 </body>
