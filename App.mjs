@@ -11,7 +11,6 @@ const App = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setFeatures(prev => ({
-        ...prev,
         blue: (prev.blue + 0.01) % 1
       }))
     }, 10)

@@ -37,5 +37,3 @@ export const Zuru = ({ shader, features }) => {
 }
 
 export default Zuru
-
-
