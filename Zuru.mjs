@@ -2,7 +2,7 @@ import { html } from "./html.mjs"
 import { useEffect, useState, useRef } from "preact/hooks"
 import { make } from "wish"
 
-export const Zuru = ({ shader }) => {
+export const Zuru = ({ shader, features }) => {
   const [render, setRender] = useState(null)
   const canvas = useRef(null)
   const frameId = useRef(null)
@@ -30,7 +30,7 @@ export const Zuru = ({ shader }) => {
     if (!render) return
 
     const animate = () => {
-      render()
+      render(features)
       frameId.current = requestAnimationFrame(animate)
     }
 
